@@ -1,0 +1,54 @@
+.container {
+    display: grid;
+    grid-template-columns: max-content max-content max-content;
+
+    /* width: 100rem; */
+
+    gap: 2rem;
+
+    justify-items: start;
+}
+
+.container article {
+
+    /* width: 30rem; */
+
+    color: white;
+    background-color: black;
+
+    /* border-radius: 1rem; */
+
+
+
+
+
+}
+
+.form-container {
+    display: none;
+}
+
+form {
+
+    width: 15rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+
+}
+
+/* #title{
+    background-color: black;
+} */
+
+form button {
+    width: fit-content;
+
+    /* align-self: center; */
+}
+
+.form-container.show-form {
+    display: block;
+}
