@@ -9,11 +9,23 @@ function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read === "true";
+  this.read = read === true || read === "true";
 
   this.info = function () {
-    console.log(
-      this.title + " by " + this.author + ", " + this.pages + " pages."
+    let readOrNot = "";
+    if (this.read) {
+      readOrNot = ", already read.";
+    } else {
+      readOrNot = ", not read yet.";
+    }
+    return (
+      this.title +
+      " is written by " +
+      this.author +
+      ", with " +
+      this.pages +
+      " pages" +
+      readOrNot
     );
   };
 }
@@ -28,7 +40,7 @@ function addBookToLibrary(title, author, pages, read) {
 
 myLibrary.push(new Book("BookOne", "AuthorOne", 10, true));
 myLibrary.push(new Book("BookTwo", "AuthorTwo", 20, false));
-myLibrary.push(new Book("BookThree", "AuthorThree", 30, true));
+myLibrary.push(new Book("BookThree", "AuthorThree", 30, false));
 
 // console.log(myLibrary);
 
@@ -38,23 +50,36 @@ showButton.onclick = function displayAllBooks() {
   container.innerHTML = "";
 
   for (const book of myLibrary) {
+    const bookContainer = document.createElement("div");
+    // bookContainer.dataset.id = book.id;
     const article = document.createElement("article");
 
-    let readOrNot = ", not read yet.";
-    if (book.read) {
-      readOrNot = ", already read.";
-    }
+    article.textContent = book.info();
 
-    article.textContent =
-      book.title +
-      " is written by " +
-      book.author +
-      ", with " +
-      book.pages +
-      " pages" +
-      readOrNot;
+    const removeBookButton = document.createElement("button");
+    removeBookButton.textContent = "Remove";
+    removeBookButton.onclick = function () {
+      // myLibrary = myLibrary.filter((obj) => obj.id !== book.id);
 
-    container.appendChild(article);
+      const index = myLibrary.findIndex((obj) => obj.id === book.id);
+      if (index !== -1) {
+        myLibrary.splice(index, 1);
+      }
+
+      bookContainer.remove();
+    };
+
+    const readOrNotButton = document.createElement("button");
+    readOrNotButton.textContent = "Read";
+    readOrNotButton.onclick = function () {
+      book.read = book.read === true ? false : true;
+      article.textContent = book.info();
+    };
+
+    bookContainer.appendChild(article);
+    bookContainer.appendChild(readOrNotButton);
+    bookContainer.appendChild(removeBookButton);
+    container.appendChild(bookContainer);
   }
 };
 
@@ -68,6 +93,8 @@ submitButton.onclick = function () {
   );
 
   showButton.click();
+  formContainer.classList.remove("show-form");
+  document.querySelector("form").reset();
 };
 
 const formContainer = document.querySelector(".form-container");
@@ -81,4 +108,10 @@ newBookButton.addEventListener("click", () => {
   } else {
     formContainer.classList.add("show-form");
   }
+});
+
+window.addEventListener("click", (e) => {
+  e.target === formContainer
+    ? formContainer.classList.remove("show-form")
+    : false;
 });
