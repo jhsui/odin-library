@@ -50,9 +50,9 @@ form {
     transform: translate(-50%, -50%);
 }
 
-/* #title{
-    background-color: black;
-} */
+form input {
+    width: 20rem;
+}
 
 form button {
     width: fit-content;
@@ -62,4 +62,19 @@ form button {
 
 .form-container.show-form {
     display: block;
+}
+
+
+.row {
+    display: flex;
+    /* align-items: center; */
+    /* vertical alignment */
+    /* gap: 10px; */
+}
+
+
+label {
+    width: 80px;
+    /* same width for all labels */
+    /* text-align: right; */
 }
